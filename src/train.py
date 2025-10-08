@@ -1,24 +1,22 @@
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-import joblib
-import os
-
 def train_model():
+    import os
+    import pandas as pd
+    from sklearn.linear_model import LinearRegression
     data = pd.DataFrame({
-        'x':[1,2,3,4,5],
-        'y':[2.2,4.1,6.0,8.1,10.2]
+        'x': [1,2,3,4,5],
+        'y': [2.2,4.1,6.0,8.1,10.2]
     })
 
-    X=data[['x']]
-    y=data['y']
+    X = data[['x']]
+    y = data['y']
 
     model = LinearRegression()
-    model.fit(X,y)
+    model.fit(X, y)
 
-    os.makedirs("models",exit_ok=True)
-    joblib.dump(model,"models/model.pkl")
-    print("Model trained amd saved")
+    # Create directory if it doesn't exist
+    os.makedirs("models", exist_ok=True)
 
-
-if __name__ == "__main__":
-    train_model()
+    # Save model
+    import pickle
+    with open("models/model.pkl", "wb") as f:
+        pickle.dump(model, f)
